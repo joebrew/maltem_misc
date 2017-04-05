@@ -42,8 +42,8 @@ for (i in 1:nrow(df)){
 }
 
 # Clean up names of items
-df$item <-
-  gsub("*_", "", df$item, perl = TRUE)
+# df$item <-
+#   gsub("*_", "", df$item, perl = TRUE)
 df$item <- 
   gsub('_', '\n', df$item)
 df$item <-
@@ -56,7 +56,7 @@ df$item <-
 cols <- colorRampPalette(brewer.pal(8, 'Dark2'))(length(unique(df$category)))
 
 # Now plot
-ggplot(data = df,
+g <- ggplot(data = df,
        aes(x = x, 
            y = y,
            color = category)) +
@@ -77,6 +77,21 @@ ggplot(data = df,
                    alpha = 0.8,
                    show.legend = FALSE,
                    size = 3) 
+
+
 ggsave('visualization.pdf',
        height = 8.5,
        width = 11)
+
+jpeg("plotdpi300.jpeg", width = 8, height =8, units = 'in', res = 300)
+print(g)
+dev.off()
+
+tiff("plotdpi300.tiff", width = 8, height = 8, #pointsize = 1/300,
+     units = 'in', res = 300)
+print(g)
+dev.off()
+
+png("plotdpi300.png", width = 8, height = 8, units = 'in', res = 300)
+print(g)
+dev.off()
